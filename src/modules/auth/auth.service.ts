@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   async findUserByEmail(email) {
-    const user = await this.prisma.user.count({
+    const user = await this.prisma.user.findFirst({
       where: {
         email: email,
       },

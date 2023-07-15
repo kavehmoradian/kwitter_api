@@ -3,7 +3,8 @@ import { AuthService } from 'src/modules/auth/auth.service';
 import { LoginDto } from 'src/requests/auth/login.dto';
 import { RegisterDto } from 'src/requests/auth/register.dto';
 import * as bcrypt from 'bcrypt';
-import { EmailExists } from 'src/exceptions/auth/emailExists.exception';
+import { EmailExistsException } from 'src/exceptions/auth/emailExists.exception';
+import { InvalidCredentialsException } from 'src/exceptions/auth/invalidCredentials.exceptions';
 
 @Controller('auth')
 export class AuthController {
@@ -12,19 +13,27 @@ export class AuthController {
   @Post('register')
   async register(@Body() data: RegisterDto) {
     const user = await this.authService.findUserByEmail(data.email);
-
-    if (user === 0) {
+    if (!user) {
       const salt = await bcrypt.genSalt();
       data.password1 = await bcrypt.hash(data.password1, salt);
       return this.authService.register(data);
     } else {
-      throw new EmailExists();
+      throw new EmailExistsException();
     }
   }
 
   @Post('login')
   async login(@Body() data: LoginDto) {
-    const match = await bcrypt.compare(data.password, '');
-    return match;
+    const user = await this.authService.findUserByEmail(data.email);
+    if (user) {
+      const match = await bcrypt.compare(data.password, user.password);
+      if (match) {
+        return { msg: 'you logged in' };
+      } else {
+        throw new InvalidCredentialsException();
+      }
+    } else {
+      throw new InvalidCredentialsException();
+    }
   }
 }
