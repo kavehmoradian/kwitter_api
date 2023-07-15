@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
-import { Match } from '../custom_validation/match.decorator';
+import { Match } from './custom_validation/match.decorator';
 
 export class RegisterDto {
   @IsEmail()
