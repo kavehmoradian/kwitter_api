@@ -5,10 +5,14 @@ import { RegisterDto } from 'src/requests/auth/register.dto';
 import * as bcrypt from 'bcrypt';
 import { EmailExistsException } from 'src/exceptions/auth/emailExists.exception';
 import { InvalidCredentialsException } from 'src/exceptions/auth/invalidCredentials.exceptions';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private jwtService: JwtService,
+  ) {}
 
   @Post('register')
   async register(@Body() data: RegisterDto) {
@@ -28,7 +32,9 @@ export class AuthController {
     if (user) {
       const match = await bcrypt.compare(data.password, user.password);
       if (match) {
-        return { msg: 'you logged in' };
+        const payload = { id: user.id, mail: user.email, role: user.role };
+        const token = await this.jwtService.signAsync(payload);
+        return { access_token: token };
       } else {
         throw new InvalidCredentialsException();
       }
