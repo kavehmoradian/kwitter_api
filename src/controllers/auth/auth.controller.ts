@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { LoginDto } from 'src/requests/auth/login.dto';
 import { RegisterDto } from 'src/requests/auth/register.dto';
@@ -13,7 +6,6 @@ import * as bcrypt from 'bcrypt';
 import { EmailExistsException } from 'src/exceptions/auth/emailExists.exception';
 import { InvalidCredentialsException } from 'src/exceptions/auth/invalidCredentials.exceptions';
 import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {

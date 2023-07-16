@@ -19,7 +19,6 @@ export class UserController {
   @UseGuards(RolesGuard)
   @Roles(Role.Admin)
   admin(@Request() req) {
-    const userid = req.user.id;
     return 'this endpoint only works for admins';
   }
 }

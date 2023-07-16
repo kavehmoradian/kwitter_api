@@ -31,6 +31,4 @@ export class AuthService {
     });
     return user;
   }
-
-  login() {}
 }
