@@ -1,11 +1,11 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
-import { User } from '@prisma/client';
-import AuthUser from 'src/decorators/authUser.decorator';
+import { ApiTags } from '@nestjs/swagger';
 import { Role, Roles } from 'src/decorators/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/role.guard';
 import { UserService } from 'src/modules/user/user.service';
 
+@ApiTags('user')
 @UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {

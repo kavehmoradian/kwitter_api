@@ -6,7 +6,9 @@ import * as bcrypt from 'bcrypt';
 import { EmailExistsException } from 'src/exceptions/auth/emailExists.exception';
 import { InvalidCredentialsException } from 'src/exceptions/auth/invalidCredentials.exceptions';
 import { JwtService } from '@nestjs/jwt';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(

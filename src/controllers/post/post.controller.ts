@@ -4,7 +4,9 @@ import { PostService } from 'src/modules/post/post.service';
 import { PostDto } from 'src/requests/post/post.dto';
 import { User } from '@prisma/client';
 import AuthUser from 'src/decorators/authUser.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('post')
 @UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {
