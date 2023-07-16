@@ -50,9 +50,4 @@ export class AuthController {
       throw new InvalidCredentialsException();
     }
   }
-  // @UseGuards(AuthGuard)
-  // @Get('private')
-  // private(@Request() req) {
-  //   return req.user;
-  // }
 }
