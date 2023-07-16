@@ -20,6 +20,6 @@ export class UserController {
   @Roles(Role.Admin)
   admin(@Request() req) {
     const userid = req.user.id;
-    return this.userService.get_user_info(userid);
+    return 'this endpoint only works for admins';
   }
 }
